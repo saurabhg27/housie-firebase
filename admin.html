@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+
+<head>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+   <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
+   <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-firestore.js"></script>
+   <script src="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.js"></script>
+   <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-auth.js"></script>
+   <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.css" />
+   <script src="admin.js"></script>
+   <style type="text/css">
+      body {
+         font-family: Arial, Helvetica, sans-serif;
+      }
+
+      button {
+         padding: 0.35em 1.2em;
+      }
+
+      button[disabled=disabled],
+      button:disabled {
+         border: 1px solid #999999;
+         background-color: #cccccc;
+         color: #666666;
+      }
+
+      .dontshowatstart {
+         display: none;
+      }
+
+      #resetBoard {
+         background-color: #EE716B;
+      }
+   </style>
+   <script>
+      $(document).ready(function () {
+
+
+      });
+   </script>
+</head>
+
+<body>
+   <h1>HOUSIE ADMIN</h1>
+   <div id="loadingdiv">Loading ....</div>
+   <div id="loginsection" class="dontshowatstart">
+      <div id="firebaseui-auth-container"></div>
+   </div>
+   <div id="adminpage" class="dontshowatstart">
+      <div id="loginuserdetails"></div>
+      <br><br>
+      <input type="text" id="numberInput" placeholder="Number">
+      <button id="generateBut">Generate !!</button>
+      <div id="generateStatus"></div>
+      <br><br>
+      <div id="adminTableDiv">
+         <button id="adTabTog">Show/Hide Table</button>
+         <button id="adTabRef">Refresh Table !!</button>
+         <table id="numberTable">
+            <tr></tr>
+         </table>
+      </div>
+      <br><br>
+      <button id="delNumBut">Delete Number !!</button>
+      <br><br>
+      <div><button id="autoGenerateButton">Auto Generate Number !!</button></div>
+      <br><br>
+      <div><button id="showMsgBut">Show Message !!</button></div>
+      <br><br>
+      <div><button id="resetBoard">Reset The Game</button></div>
+   </div>
+</body>
+
+</html>

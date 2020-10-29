@@ -1,0 +1,156 @@
+<!doctype html>
+<html>
+
+<head>
+   <style type="text/css">
+      div {
+         text-align: center;
+         font-family: Arial, Helvetica, sans-serif;
+      }
+
+      .messageDiv {
+         color: #599FDE;
+         font-size: 1.3em;
+         font-weight: bold;
+      }
+
+      .last5 {
+         font-size: 1.5em;
+         color: #3F4A3D;
+         font-weight: bold;
+         text-shadow: 1px 1px #80947D;
+      }
+
+      .numbersTable {
+         font-size: 1.6em;
+      }
+
+      table {
+         margin-left: auto;
+         margin-right: auto;
+      }
+
+      table,
+      tr,
+      td {
+         border-collapse: collapse;
+         border: solid 1px #999;
+         padding: 0.5rem;
+      }
+
+      td {
+         min-width: 50px;
+         color: #E7CBC5;
+      }
+
+      td.selected {
+         color: #E4EAE3;
+         background-color: #27A500;
+         border: 2px solid black;
+         font-weight: bold;
+         text-shadow: 1px 1px #80947D;
+      }
+   </style>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+   <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
+   <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-firestore.js"></script>
+
+   <script>
+
+      // Your web app's Firebase configuration
+      var firebaseConfig = {
+         apiKey: "AIzaSyAHId-jypih_eetC9RQWPFTlpdBm0zXO_Y",
+         authDomain: "housie-e5c32.firebaseapp.com",
+         databaseURL: "https://housie-e5c32.firebaseio.com",
+         projectId: "housie-e5c32",
+         appId: "1:870540156533:web:8b39f85f7628329072623c"
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      // Initialize Cloud Firestore through Firebase
+
+      var db = firebase.firestore();
+      
+
+      db.collection("stuff").doc("board").onSnapshot(function(doc) {
+        var source = doc.metadata.hasPendingWrites ? "Local" : "Server";
+        var mapJson = JSON.parse(doc.data().boardjson);
+         var lastfewData=doc.data().lastfew;
+         var message=doc.data().boardmessage;
+         $("#last5").html("Last five:   " + lastfewData);
+         $("#messageDiv").html(message);
+         //console.log(mapJson);
+         renderTable(mapJson)
+    });
+
+      function renderTable(map) {
+
+         //console.log(map);
+         for (var key in map) {
+            if (map.hasOwnProperty(key)) {
+               var val = map[key];
+               //console.log(key);
+               //console.log(val);
+               if (val == "true") {
+                  $('td.cell' + key).addClass('selected');
+
+               }
+               if (val == "false") {
+                  $('td.cell' + key).removeClass('selected');
+               }
+            }
+          
+            
+         }
+
+      }
+
+
+   </script>
+   <script>
+    
+      $(document).ready(function () {
+
+         console.log("LOADED");
+         renderBoard();
+      });
+
+      function renderBoard() {
+
+         for (var i = 0; i < 9; i++) {
+            var rowStr = "<tr>";
+            for (var j = 1; j <= 10; j++) {
+
+               var number = i * 10 + j;
+               rowStr = rowStr + "<td class='cell" + number + "'>" + number + "</td>";
+            }
+            rowStr = rowStr + "</tr>";
+            $('#numbersTable tr:last').after(rowStr);
+
+         }
+      }
+
+   </script>
+</head>
+
+<body>
+   <div>
+      <h1>HOUSIE</h1>
+   </div>
+   <div id="messageDiv" class="messageDiv"></div>
+   <br>
+   <div id="last5" class="last5">
+      <div>last 5</div>
+   </div>
+   <br>
+   <div id="numbersTable" class="numbersTable">
+      <table>
+         <tbody>
+            <tr></tr>
+         </tbody>
+      </table>
+   </div>
+</body>
+
+</html>
