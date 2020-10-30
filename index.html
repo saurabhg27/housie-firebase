@@ -76,9 +76,10 @@
       db.collection("stuff").doc("board").onSnapshot(function(doc) {
         var source = doc.metadata.hasPendingWrites ? "Local" : "Server";
         var mapJson = JSON.parse(doc.data().boardjson);
-         var lastfewData=doc.data().lastfew;
+         var lastfewData=JSON.parse(doc.data().lastfew);
          var message=doc.data().boardmessage;
-         $("#last5").html("Last five:   " + lastfewData);
+         var last5=lastfewData.slice(Math.max(lastfewData.length - 7, 0)).reverse()
+         $("#last5").html("Last seven:   " + last5);
          $("#messageDiv").html(message);
          //console.log(mapJson);
          renderTable(mapJson)
