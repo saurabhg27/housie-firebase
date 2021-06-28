@@ -71,19 +71,19 @@
       // Initialize Cloud Firestore through Firebase
 
       var db = firebase.firestore();
-      
 
-      db.collection("stuff").doc("board").onSnapshot(function(doc) {
-        var source = doc.metadata.hasPendingWrites ? "Local" : "Server";
-        var mapJson = JSON.parse(doc.data().boardjson);
-         var lastfewData=JSON.parse(doc.data().lastfew);
-         var message=doc.data().boardmessage;
-         var last5=lastfewData.slice(Math.max(lastfewData.length - 7, 0)).reverse()
+
+      db.collection("stuff").doc("board").onSnapshot(function (doc) {
+         var source = doc.metadata.hasPendingWrites ? "Local" : "Server";
+         var mapJson = JSON.parse(doc.data().boardjson);
+         var lastfewData = JSON.parse(doc.data().lastfew);
+         var message = doc.data().boardmessage;
+         var last5 = lastfewData.slice(Math.max(lastfewData.length - 7, 0)).reverse()
          $("#last5").html("Last seven:   " + last5);
          $("#messageDiv").html(message);
          //console.log(mapJson);
          renderTable(mapJson)
-    });
+      });
 
       function renderTable(map) {
 
@@ -101,8 +101,8 @@
                   $('td.cell' + key).removeClass('selected');
                }
             }
-          
-            
+
+
          }
 
       }
@@ -110,7 +110,7 @@
 
    </script>
    <script>
-    
+
       $(document).ready(function () {
 
          console.log("LOADED");
@@ -118,67 +118,17 @@
       });
 
       function renderBoard() {
-	var dict = ["","बाजा 🎺"
-,"कार 🚗"
-,"हार"
-,"फूल 🌺"
-,"दूल्हा"
-,"बाजोट"
-,"फल 🍓"
-,"मिठाई 🧁"
-,"बारात"
-,"हलवाई"
-,"हाल"
-,"वरमाला"
-,"चाट 🍝"
-,"गेहने"
-,"बहन 👩‍🦰"
-,"माता"
-,"काजल"
-,"मेहँदी"
-,"जुतिया 👠"
-,"पिता 👴🏻"
-,"सिन्दूर"
-,"बस 🚌"
-,"शेरवानी"
-,"फेरे"
-,"पार्टी 🥳"
-,"मंगलसूत्र"
-,"विनायक"
-,"हवन 🔥"
-,"लड़की"
-,"चावल 🍚"
-,"शादि का जोड़ा 🥻"
-,"मेकअप 💄"
-,"साली"
-,"मूंग"
-,"राजभोग"
-,"मायरा"
-,"गुड़"
-,"नाच 💃"
-,"लड़का 👳🏻‍"
-,"सेहरा"
-,"पाटा"
-,"मंडप"
-,"भाई 👦"
-,"पंडित"
-,"लाडू"
-,"हल्दी"
-,"गीत 🎶"
-,"बान"
-,"दही 🥛"
-,"घी पिलाना"];
-	  
+         // var dict = [""];
 
-         for (var i = 0; i < 5; i++) {
+         for (var i = 0; i < 9; i++) {
             var rowStr = "<tr>";
             for (var j = 1; j <= 10; j++) {
-				
+
                var number = i * 10 + j;
-			   //var numtxt=number+" "+dict[number]
-			   var numtxt=dict[number]
+               //var numtxt=number+" "+dict[number]
+               var numtxt = number
                rowStr = rowStr + "<td class='cell" + number + "'>" + numtxt + "</td>";
-			   
+
             }
             rowStr = rowStr + "</tr>";
             $('#numbersTable tr:last').after(rowStr);
